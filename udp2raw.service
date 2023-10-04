@@ -1,0 +1,16 @@
+[Unit]
+Description=udp2raw service
+ConditionFileIsExecutable=/usr/local/bin/udp2raw
+ConditionPathExists=/etc/udp2raw.conf
+After=network.target
+[Service]
+Type=simple
+User=root
+Group=root
+#LimitNOFILE=32768
+PIDFile=/run/udp2raw.pid
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN
+ExecStart=/usr/local/bin/udp2raw --conf-file /etc/udp2raw.conf
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
